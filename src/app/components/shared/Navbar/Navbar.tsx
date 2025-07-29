@@ -16,8 +16,8 @@ const Navbar = () => {
   ];
 
   return (
-    <header className=" container w-full bg-white shadow-md fixed top-0 left-0 z-50">
-      <div className=" max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
+    <header className="lg:container w-full bg-white shadow-md fixed top-0 left-0 z-50">
+      <div className="container max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
         {/* Left: Nav Links */}
         <nav className="hidden md:flex gap-10 text-sm font-medium">
           {navLinks.map((link) => (

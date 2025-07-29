@@ -22,7 +22,7 @@ export default function OurBranch() {
   ]
 
   return (
-    <div className="container flex min-h-screen p-4 sm:p-6">
+    <div className="container w-full md:w-[1100px] flex min-h-screen p-4 sm:p-6">
       <div className="w-full">
         <Card className="w-full max-w-6xl rounded-xl shadow-lg mx-auto">
           <CardContent className="p-4 sm:p-8">

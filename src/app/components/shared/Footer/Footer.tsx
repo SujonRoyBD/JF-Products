@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 export default function Component() {
   return (
-    <footer className="bg-gradient-to-br from-[#0A2342] to-[#1A4A8A] text-white text-jf-text-light">
-      <div className="container mx-auto px-4 py-12 lg:py-20">
+    <footer className="bg-gradient-to-br from-[#0A2342] md:-mt-[250px] to-[#1A4A8A] text-white text-jf-text-light">
+      <div className="container mx-auto px-4 py-4 lg:py-20">
         {/* Top section: Newsletter, Information, Helpful */}
         <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-12">
           {/* Newsletter Section */}
