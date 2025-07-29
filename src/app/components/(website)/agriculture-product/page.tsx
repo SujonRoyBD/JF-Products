@@ -1,9 +1,8 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 
-// Define the product type
 type Product = {
   id: number;
   title: string;
@@ -11,7 +10,6 @@ type Product = {
   image: string;
 };
 
-// Data
 const products: Product[] = [
   {
     id: 1,
@@ -42,33 +40,73 @@ const products: Product[] = [
 const ProductAgriculture = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
+ 
+  const scrollAmount = 270;
+
   const scrollLeft = () => {
-    carouselRef.current?.scrollBy({ left: -300, behavior: "smooth" });
+    if (carouselRef.current) {
+      // scroll left by one card width
+      const newScrollLeft = carouselRef.current.scrollLeft - scrollAmount;
+
+      if (newScrollLeft <= 0) {
+        carouselRef.current.scrollTo({
+          left: carouselRef.current.scrollWidth - carouselRef.current.clientWidth,
+          behavior: "smooth",
+        });
+      } else {
+        carouselRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      }
+    }
   };
 
   const scrollRight = () => {
-    carouselRef.current?.scrollBy({ left: 300, behavior: "smooth" });
+    if (carouselRef.current) {
+      const maxScroll = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
+      const newScrollLeft = carouselRef.current.scrollLeft + scrollAmount;
+
+      if (newScrollLeft >= maxScroll) {
+
+        carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
+    }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      scrollRight();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="py-10 px-4 max-w-7xl mx-auto container">
-      <h2 className="container text-2xl md:text-3xl font-semibold mb-6">Agricultural Products</h2>
-      <div className="relative container">
+    <div className="px-3 md:px-4 lg:px-20 py-10 px-4 max-w-7xl mx-auto">
+      <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+        Agricultural Products
+      </h2>
+
+      <div className="relative">
+        {/* Left Arrow */}
         <button
           onClick={scrollLeft}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full"
+          aria-label="Scroll Left"
         >
           <FiChevronLeft size={24} />
         </button>
 
+        {/* Carousel container */}
         <div
           ref={carouselRef}
-          className="grid grid-cols-1 md:grid-cols-4 gap-6 overflow-x-auto scroll-smooth scrollbar-hide pr-6"
+          className="flex gap-12 overflow-x-auto scroll-smooth scrollbar-hide px-10"
         >
-          {products.map((product) => (
+        
+          {[...products, ...products].map((product, idx) => (
             <div
-              key={product.id}
-              className="min-w-[250px]rounded-[17.44px] bg-[#F2F4F6] shadow-md p-4 flex flex-col justify-between"
+              key={idx}
+              className="min-w-[250px] max-w-[250px] rounded-[17.44px] bg-[#F2F4F6] shadow-md p-4 flex flex-col justify-between"
             >
               <Image
                 src={product.image}
@@ -86,9 +124,11 @@ const ProductAgriculture = () => {
           ))}
         </div>
 
+        {/* Right Arrow */}
         <button
           onClick={scrollRight}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full"
+          aria-label="Scroll Right"
         >
           <FiChevronRight size={24} />
         </button>

@@ -1,8 +1,8 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { FaArrowRight } from "react-icons/fa";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+
 // Product type
 type Product = {
   id: number;
@@ -11,7 +11,6 @@ type Product = {
   image: string;
 };
 
-// Product data
 const products: Product[] = [
   {
     id: 1,
@@ -37,40 +36,82 @@ const products: Product[] = [
     price: "₹1,646.10 – ₹18,284.10",
     image: "/assets/products/land4.png",
   },
+  {
+    id: 5,
+    title: "JF Spike Fence",
+    price: "₹2,500.00",
+    image: "/assets/products/land1.png",
+  },
+  {
+    id: 6,
+    title: "JF Vertical Green",
+    price: "₹4,800.00",
+    image: "/assets/products/land2.png",
+  },
 ];
 
 const LandscapeProducts = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const scrollLeft = () => {
-    carouselRef.current?.scrollBy({ left: -300, behavior: "smooth" });
+  // Function to scroll to a particular item index
+  const scrollToItem = (index: number) => {
+    const targetItem = itemRefs.current[index];
+    if (targetItem && carouselRef.current) {
+      carouselRef.current.scrollTo({
+        left: targetItem.offsetLeft,
+        behavior: "smooth",
+      });
+    }
   };
 
-  const scrollRight = () => {
-    carouselRef.current?.scrollBy({ left: 300, behavior: "smooth" });
+  // Go to next item, loop at end
+  const goToNext = () => {
+    const nextIndex = (currentIndex + 1) % products.length;
+    setCurrentIndex(nextIndex);
+    scrollToItem(nextIndex);
   };
+
+  // Go to previous item, loop at start
+  const goToPrev = () => {
+    const prevIndex = (currentIndex - 1 + products.length) % products.length;
+    setCurrentIndex(prevIndex);
+    scrollToItem(prevIndex);
+  };
+
+  // Auto-scroll every 1 second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      goToNext();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   return (
-    <div className="py-10 px-4 max-w-7xl mx-auto container">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 container">Landscape Products</h2>
-      <div className="relative container">
-        {/* Left Button */}
+    <div className=" px-3 md:px-4 lg:px-20 py-10 px-4 max-w-7xl mx-auto">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6">Landscape Products</h2>
+      <div className="relative">
+        {/* Left Arrow */}
         <button
-          onClick={scrollLeft}
+          onClick={goToPrev}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-2 rounded-full"
+          aria-label="Previous"
         >
-          <FaArrowLeft size={24} />
+          <FaArrowLeft size={20} />
         </button>
 
-        {/* Scrollable Product List */}
+        {/* Carousel Container */}
         <div
           ref={carouselRef}
-          className="grid grid-cols-1 md:grid-cols-4 gap-6 overflow-x-auto scroll-smooth scrollbar-hide pr-6"
+          className="flex gap-9 overflow-x-auto scroll-smooth scrollbar-hide pr-6"
         >
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div
-              key={product.id}
-              className="min-w-[250px]rounded-[17.44px] bg-[#F2F4F6] shadow-md p-4 flex flex-col justify-between"
+              key={index}
+              ref={(el) => (itemRefs.current[index] = el)}
+              className="min-w-[90%] sm:min-w-[32%] lg:min-w-[23%] rounded-[17.44px] bg-[#F2F4F6] shadow-md p-4 flex flex-col justify-between"
             >
               <Image
                 src={product.image}
@@ -88,12 +129,13 @@ const LandscapeProducts = () => {
           ))}
         </div>
 
-        {/* Right Button */}
+        {/* Right Arrow */}
         <button
-          onClick={scrollRight}
+          onClick={goToNext}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-2 rounded-full"
+          aria-label="Next"
         >
-          <FaArrowRight size={24} />
+          <FaArrowRight size={20} />
         </button>
       </div>
     </div>

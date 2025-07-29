@@ -19,7 +19,7 @@ const Banner = () => {
           <div>
               <h2 className="font-[Poppins] font-bold  text-[42px] leading-normal  tracking-[0px] text-left">JF Privezy Grass <br /> Wall</h2>
             <p className="pt-[10px] pb-[30px]">The perfact Blend of Greenery</p>
-            <button className="px-4 py-1 rounded-[100px] bg-[#B0DD1D]">Shope Now</button>
+            <button className="px-4 py-1 rounded-[100px] bg-[#B0DD1D]">Shop Now</button>
           </div>
         </div>
       </div>
