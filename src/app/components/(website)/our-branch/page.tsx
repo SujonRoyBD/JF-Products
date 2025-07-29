@@ -22,10 +22,10 @@ export default function OurBranch() {
   ]
 
   return (
-    <div className="container w-full md:w-[1100px] flex min-h-screen p-4 sm:p-6">
-      <div className="w-full">
-        <Card className="w-full max-w-6xl rounded-xl shadow-lg mx-auto">
-          <CardContent className="p-4 sm:p-8">
+    <div className="container w-full flex p-4 sm:p-6">
+      <div className="w-full container">
+        <Card className="w-full lg:max-w-6xl rounded-xl shadow-lg mx-auto">
+          <CardContent className="w-full p-4 sm:p-8">
             <div className="flex flex-col items-center">
               <div className="bg-[#8BC34A] text-white text-sm font-semibold px-4 py-1 rounded-full mb-6">
                 OUR BRANCHES

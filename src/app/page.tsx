@@ -10,7 +10,7 @@ import WhyUsSection from "./components/(website)/why-us/page";
 
 export default function Home() {
   return (
-    <div>
+    <div className="">
      <Banner/>
      <ProductAgriculture/>
      <LandscapeProducts/>
