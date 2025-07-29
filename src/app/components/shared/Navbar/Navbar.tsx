@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaUser, FaSearch, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
+import { FaUser, FaSearch, FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,10 +16,9 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="w-full container bg-white shadow-md fixed top-0 left-0 z-50">
+    <header className=" container w-full bg-white shadow-md fixed top-0 left-0 z-50">
       <div className=" max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
-    
-        {/* Center: Nav Links */}
+        {/* Left: Nav Links */}
         <nav className="hidden md:flex gap-10 text-sm font-medium">
           {navLinks.map((link) => (
             <Link
@@ -31,6 +30,8 @@ const Navbar = () => {
             </Link>
           ))}
         </nav>
+
+        {/* Center: Logo */}
         <div className="flex items-center gap-2">
           <Link href="/">
             <Image
@@ -45,7 +46,10 @@ const Navbar = () => {
 
         {/* Right: Icons */}
         <div className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="/login" className="flex items-center gap-1 hover:text-blue-600">
+          <Link
+            href="/login"
+            className="flex items-center gap-1 hover:text-blue-600"
+          >
             <span>Login</span>
             <Image
               src="/assets/svg/login.svg"
@@ -54,6 +58,7 @@ const Navbar = () => {
               width={16}
             />
           </Link>
+
           <Image
             src="/assets/svg/search.svg"
             alt="search"
@@ -61,9 +66,9 @@ const Navbar = () => {
             width={16}
             className="cursor-pointer"
           />
-       
+
           <div className="relative cursor-pointer">
-            <Image className=""
+            <Image
               src="/assets/svg/cart.svg"
               alt="cart"
               height={16}
@@ -80,15 +85,16 @@ const Navbar = () => {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-xl text-gray-800"
+            aria-label="Toggle Menu"
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Dropdown Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white px-6 pb-6">
+        <div className="md:hidden bg-white px-6 pb-6 shadow">
           <nav className="flex flex-col gap-4 text-sm font-medium text-black">
             {navLinks.map((link) => (
               <Link
@@ -100,15 +106,31 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+
             <hr className="my-2" />
-            <Link href="/login" className="flex items-center gap-2">
+
+            <Link
+              href="/login"
+              className="flex items-center gap-2 hover:text-blue-600"
+              onClick={() => setMenuOpen(false)}
+            >
               <span>Login</span>
               <FaUser />
             </Link>
 
             <div className="flex items-center gap-5 pt-2">
               <FaSearch className="cursor-pointer" />
-              
+              <div className="relative cursor-pointer">
+                <Image
+                  src="/assets/svg/cart.svg"
+                  alt="cart"
+                  height={16}
+                  width={16}
+                />
+                <span className="absolute -top-2 -right-4 bg-black text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                  0
+                </span>
+              </div>
             </div>
           </nav>
         </div>

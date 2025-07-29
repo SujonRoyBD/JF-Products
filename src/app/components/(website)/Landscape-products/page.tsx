@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
@@ -15,7 +16,7 @@ const products: Product[] = [
   {
     id: 1,
     title: "Antiqo Fence",
-    price: "₹10,024.00 – ₹14,984.82",
+    price: "₹10,024.00 - ₹14,984.82",
     image: "/assets/products/land1.png",
   },
   {
@@ -27,13 +28,13 @@ const products: Product[] = [
   {
     id: 3,
     title: "JF Polyhex Mesh",
-    price: "₹4,050.00 – ₹10,770.00",
+    price: "₹4,050.00 - ₹10,770.00",
     image: "/assets/products/land3.png",
   },
   {
     id: 4,
     title: "JF Privezy Grass Wall",
-    price: "₹1,646.10 – ₹18,284.10",
+    price: "₹1,646.10 - ₹18,284.10",
     image: "/assets/products/land4.png",
   },
   {
@@ -55,8 +56,7 @@ const LandscapeProducts = () => {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Function to scroll to a particular item index
-  const scrollToItem = (index: number) => {
+  const scrollToItem = useCallback((index: number) => {
     const targetItem = itemRefs.current[index];
     if (targetItem && carouselRef.current) {
       carouselRef.current.scrollTo({
@@ -64,33 +64,30 @@ const LandscapeProducts = () => {
         behavior: "smooth",
       });
     }
-  };
+  }, []);
 
-  // Go to next item, loop at end
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     const nextIndex = (currentIndex + 1) % products.length;
     setCurrentIndex(nextIndex);
     scrollToItem(nextIndex);
-  };
+  }, [currentIndex, scrollToItem]);
 
-  // Go to previous item, loop at start
   const goToPrev = () => {
     const prevIndex = (currentIndex - 1 + products.length) % products.length;
     setCurrentIndex(prevIndex);
     scrollToItem(prevIndex);
   };
 
-  // Auto-scroll every 1 second
   useEffect(() => {
-    const interval = setInterval(() => {
-      goToNext();
-    }, 1000);
+    // Only autoplay on medium screens and up
+    if (typeof window !== "undefined" && window.innerWidth < 768) return;
 
+    const interval = setInterval(goToNext, 3000);
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [goToNext]);
 
   return (
-    <div className=" px-3 md:px-4 lg:px-20 py-10 px-4 max-w-7xl mx-auto">
+    <div className="md:px-4 lg:px-20 py-10 px-4 max-w-7xl mx-auto">
       <h2 className="text-2xl md:text-3xl font-bold mb-6">Landscape Products</h2>
       <div className="relative">
         {/* Left Arrow */}
@@ -102,15 +99,17 @@ const LandscapeProducts = () => {
           <FaArrowLeft size={20} />
         </button>
 
-        {/* Carousel Container */}
+        {/* Carousel */}
         <div
           ref={carouselRef}
           className="flex gap-9 overflow-x-auto scroll-smooth scrollbar-hide pr-6"
         >
           {products.map((product, index) => (
             <div
-              key={index}
-              ref={(el) => (itemRefs.current[index] = el)}
+              key={product.id}
+              ref={(el) => {
+                itemRefs.current[index] = el;
+              }}
               className="min-w-[90%] sm:min-w-[32%] lg:min-w-[23%] rounded-[17.44px] bg-[#F2F4F6] shadow-md p-4 flex flex-col justify-between"
             >
               <Image
@@ -118,6 +117,7 @@ const LandscapeProducts = () => {
                 alt={product.title}
                 width={240}
                 height={160}
+                priority
                 className="rounded-lg object-contain h-40 w-full"
               />
               <h3 className="text-base font-semibold mt-4">{product.title}</h3>
