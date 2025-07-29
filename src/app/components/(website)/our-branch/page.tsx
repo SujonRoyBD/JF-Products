@@ -22,16 +22,17 @@ export default function OurBranch() {
   ]
 
   return (
-    <div className="container px-16 flex justify-center items-center min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
-      <Card className="w-full max-w-6xl rounded-xl shadow-lg overflow-hidden">
+    <div className="container flex  min-h-screen  p-4 sm:p-6">
+     <div className="container ">
+       <Card className="w-full lg:w-[1070px] md:w-[910px] max-w-6xl rounded-xl shadow-lg overflow-hidden">
         <CardContent className="p-0">
-          <div className="flex flex-col items-center py-6 px-4 sm:px-6">
+          <div className="flex flex-col items-center  px-4 sm:px-6 ">
             <div className="bg-[#8BC34A] text-white text-sm font-semibold px-4 py-1 rounded-full mb-6">
               OUR BRANCHES
             </div>
 
             {/* Branch Buttons */}
-            <div className="flex gap-9 flex-wrap justify-center gap-4 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+            <div className="flex gap-9 flex-wrap justify-center  mb-8 overflow-x-auto pb-2 scrollbar-hide">
               {branches.map((branch) => {
                 const isActive = activeBranch === branch.name
                 return (
@@ -126,6 +127,7 @@ export default function OurBranch() {
           </div>
         </CardContent>
       </Card>
+     </div>
     </div>
   )
 }

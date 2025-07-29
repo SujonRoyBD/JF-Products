@@ -1,4 +1,4 @@
-import { BarChart3, Play } from "lucide-react"
+import { BarChart3,  } from "lucide-react"
 
 export default function AllProduct() {
   return (

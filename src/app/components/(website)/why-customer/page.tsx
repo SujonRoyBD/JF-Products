@@ -7,14 +7,14 @@ import { Button } from "@/components/ui/button"
 
 export default function WhyCustomer() {
   return (
-    <section className="container w-full py-6 md:py-5 lg:py-6 bg-white">
-      <div className="container px-4 md:px-9">
+    <section className="container w-full py-6 md:py-5  bg-white">
+      <div className="container md:px-4">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl md:gap-9 text-center mb-12">
           Why Customers Love Us?
         </h2>
-        <div className="grid md:grid-cols-2 md:gap-[300px] lg:gap-[400px] items-center">
+        <div className="grid md:grid-cols-2 md:gap-[400px] lg:gap-[400px] items-center">
           {/* Testimonial Card */}
-          <Card className="p-8 lg:w-[730px] md:w-[500px] shadow-lg rounded-xl bg-gray-50 flex flex-col justify-between h-[408px] ">
+          <Card className="p-8 lg:w-[700px] md:w-[530px] shadow-lg rounded-xl bg-gray-50 flex flex-col justify-between h-[408px] ">
             <div>
               <FaQuoteLeft className="w-12 h-12 text-lime-500 mb-6" />
               <p className="text-lg md:text-xl leading-relaxed text-gray-700">
@@ -38,7 +38,7 @@ export default function WhyCustomer() {
           </Card>
 
           {/* Video Thumbnail */}
-          <div className="relative w-full lg:w-[369px] md:w-[320px] h-[408px]  max-w-sm mx-auto  rounded-xl overflow-hidden border-4 border-blue-500 shadow-lg">
+          <div className="relative w-full lg:w-[339px] md:w-[340px] h-[408px]  max-w-sm mx-auto  rounded-xl overflow-hidden border-4 border-blue-500 shadow-lg">
             <Image
               src="/assets/others/man.png"
               alt="Customer testimonial video"
