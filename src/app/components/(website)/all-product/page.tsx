@@ -10,7 +10,7 @@ export default function AllProduct() {
       >
         <div className="flex flex-nowrap gap-8 text-blue-800 text-sm font-medium px-8">
           {/* Only 4 items */}
-          {[...Array(4)].map((_, i) => (
+          {[...Array(2)].map((_, i) => (
             <div key={i} className="flex items-center gap-4 whitespace-nowrap">
               <BarChart3 className="w-4 h-4" />
               <span>Quality Product</span>
