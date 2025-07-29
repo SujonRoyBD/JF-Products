@@ -82,7 +82,7 @@ const LandscapeProducts = () => {
     // Only autoplay on medium screens and up
     if (typeof window !== "undefined" && window.innerWidth < 768) return;
 
-    const interval = setInterval(goToNext, 3000);
+    const interval = setInterval(goToNext, 2000);
     return () => clearInterval(interval);
   }, [goToNext]);
 
